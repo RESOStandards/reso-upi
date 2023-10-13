@@ -14,7 +14,7 @@
     "UPI"
   ],
   "author": "josh@reso.org",
-  "license": "ISC",
+  "license": "See license in ./LICENSE",
   "bugs": {
     "url": "https://github.com/RESOStandards/reso-upi-v2/issues"
   },
