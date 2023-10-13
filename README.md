@@ -114,4 +114,20 @@ To install from GitHub:
 npm i RESOStandards/reso-upi-v2
 ```
 
+If the installation hangs, you could follow this sequence from the command line.  If you do not have Mocha installed globally, the last line will install it locally.
+
+ ```
+> mkdir [PROJECT_LOCATION]
+> cd [PROJECT_LOCATION]
+> git clone https://github.com/RESOStandards/reso-upi-v2.git
+> cd reso-upi-v2
+> npm install
+> npm install mocha
+```
+ To check the installation, run:
+ ```
+> npm run test
+```
+
 For examples of how to use this library, see [**./test**](./test/test.js).
+
