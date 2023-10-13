@@ -2,7 +2,7 @@
 
 const DEFAULT_UPI_VERSION = '2.0',
   URN_SEPARATOR = ':',
-  RESO_URN_STEM = `urn:reso:upi`,
+  RESO_URN_STEM = 'urn:reso:upi',
   RESO_CONTEXT = '@reso.context';
 
 const WELL_KNOWN_IDENTIFIERS = Object.freeze({
@@ -52,11 +52,11 @@ const getWellKnownIdentifiersMap = (version = DEFAULT_UPI_VERSION) => {
  * @param {Object} params The version (default is 2.0 currently) and RESO Common Format payload of well-known parts
  * @returns a URN-encoded UPI in the given format for the version
  */
-const encodeUpi = ({ version = DEFAULT_UPI_VERSION, upiData = {} }) =>
+const encode = ({ version = DEFAULT_UPI_VERSION, upiData = {} }) =>
   [
     RESO_URN_STEM,
     version,
-    ...Object.entries(getWellKnownIdentifiersMap(version) ?? {})?.flatMap(([ddFieldName, urnFieldName]) => [
+    ...Object.entries(getWellKnownIdentifiersMap(version) ?? {}).flatMap(([ddFieldName, urnFieldName]) => [
       urnFieldName,
       upiData && upiData?.[ddFieldName] ? upiData[ddFieldName] : null
     ])
@@ -87,7 +87,7 @@ const encodeUpi = ({ version = DEFAULT_UPI_VERSION, upiData = {} }) =>
  * @param {Object} params The version (currently 2.0) and UPI in URN format to parse
  * @returns Component data extracted and returned as a versioned RESO Common Format object
  */
-const decodeUpi = ({ version = DEFAULT_UPI_VERSION, upi = '' }) => {
+const decode = ({ version = DEFAULT_UPI_VERSION, upi = '' }) => {
   const DECODING_ERROR_MESSAGE = `Malformed UPI!: ${upi}`,
     URN_PREFIX = [RESO_URN_STEM, version].join(URN_SEPARATOR);
 
@@ -130,11 +130,11 @@ const decodeUpi = ({ version = DEFAULT_UPI_VERSION, upi = '' }) => {
  * @param {String} upi URN representation of the UPI
  * @returns true if the representation is valid for the given version, which is encoded in the URN, false otherwise
  */
-const validateUpi = upi => upi && false; //TODO
+const validate = upi => upi && false; //TODO
 
 module.exports = {
   RESO_CONTEXT,
-  decodeUpi,
-  encodeUpi,
-  validateUpi
+  decode,
+  encode,
+  validate
 };
