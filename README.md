@@ -3,7 +3,7 @@
 
 # Universal Property Identifier (UPI) Version 2
 
-The UPI is a way to take a set of well-known identifiers and encode them in a way such that if two parties both have the same data, they can create the identifiers and match on them. This is useful for deduplicating data.
+The UPI is a way to take a set of well-known Property identifiers and encode them in a way such that if two parties both have the same data, they can create the identifiers and match on them. This is useful for deduplicating data.
 
 UPIs can also easily be searched on by parts and be used with URIs as part of a browser location or API URL, since they are friendly with existing URI standards.
 
@@ -57,7 +57,7 @@ This UPI can be decoded into a RESO Common Format payload using the `decode` fun
 
 > upiData
 {
-  '@reso.context': 'urn:reso:metadata:2.0:property',
+  '@reso.context': 'urn:reso:metadata:2.0:resource:property',
   Country: 'US',
   StateOrProvince: 'CA',
   County: '06037',
@@ -83,7 +83,7 @@ We can do so using the `encode` function:
 > const { encode } = require(".");
 
 > const upiData = {
-  '@reso.context': 'urn:reso:metadata:2.0:property',
+  '@reso.context': 'urn:reso:metadata:2.0:resource:property',
   Country: 'US',
   StateOrProvince: 'CA',
   County: '06037',
@@ -108,10 +108,29 @@ We can do so using the `encode` function:
 
 # Installation
 
+## As an npm package
 To install from GitHub:
 
 ```
 npm i RESOStandards/reso-upi-v2
 ```
 
+## Installing and Running Locally
+If you would like to run the project locally, install [**Node**](https://nodejs.org/en/download) and [**git**](https://github.com/git-guides/install-git) if you don't have them already.
+
+```
+> mkdir [PROJECT_LOCATION]
+> cd [PROJECT_LOCATION]
+> git clone https://github.com/RESOStandards/reso-upi-v2.git
+> cd reso-upi-v2
+> npm install
+> npm install mocha
+```
+
+To check the installation, run:
+```
+> npm run test
+```
+
 For examples of how to use this library, see [**./test**](./test/test.js).
+
