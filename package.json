@@ -1,0 +1,25 @@
+{
+  "name": "reso-upi-v2",
+  "version": "1.0.0",
+  "description": "URN-based UPI",
+  "main": "index.js",
+  "scripts": {
+    "test": "mocha"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/RESOStandards/reso-upi-v2.git"
+  },
+  "keywords": [
+    "UPI"
+  ],
+  "author": "josh@reso.org",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/RESOStandards/reso-upi-v2/issues"
+  },
+  "homepage": "https://github.com/RESOStandards/reso-upi-v2#readme",
+  "devDependencies": {
+    "mocha": "^10.2.0"
+  }
+}
