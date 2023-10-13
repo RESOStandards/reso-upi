@@ -101,4 +101,14 @@ We can do so using the `encode` function:
 * Since `version` is included, different formulas could be used for different versions and accommodate future changes or improvements without making backwards-breaking changes.
 * v1 URNs are also supported, they're just not encoded using the component scheme shown here. They could either be prefixed with `1.0` in place of `2.0`, above, or we can assume that if the data in the DD field does not start with `urn:reso:upi`, that it's in the v1 format.
 * Since the URN-based UPI essentially encodes key/value pairs, it's extensible and could even support local components.
-* The URN-based UPI is self-documenting and human friendly, since each component is explicitly named. We know that the first element is `:country:` and what its value is, and that the second value is `:stateorprovince:`, etc.  
+* The URN-based UPI is self-documenting and human friendly, since each component is explicitly named. We know that the first element is `:country:` and what its value is, and that the second value is `:stateorprovince:`, etc.
+
+# Installation
+
+To install from GitHub:
+
+```
+npm i RESOStandards/reso-upi-v2
+```
+
+For examples of how to use this library, see [**./test**](./test/test.js).
