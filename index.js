@@ -113,7 +113,7 @@ const decode = ({ version = DEFAULT_UPI_VERSION, upi = '' }) => {
     }
 
     return {
-      [RESO_CONTEXT]: `urn:reso:metadata:${version}:property`,
+      [RESO_CONTEXT]: `urn:reso:metadata:${version}:resource:property`,
       ...Object.keys(getWellKnownIdentifiersMap(version)).reduce((acc, key, i) => {
         acc[key] = parts?.[i]?.length ? parts[i] : null;
         return acc;

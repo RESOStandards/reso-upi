@@ -57,7 +57,7 @@ This UPI can be decoded into a RESO Common Format payload using the `decode` fun
 
 > upiData
 {
-  '@reso.context': 'urn:reso:metadata:2.0:property',
+  '@reso.context': 'urn:reso:metadata:2.0:resource:property',
   Country: 'US',
   StateOrProvince: 'CA',
   County: '06037',
@@ -83,7 +83,7 @@ We can do so using the `encode` function:
 > const { encode } = require(".");
 
 > const upiData = {
-  '@reso.context': 'urn:reso:metadata:2.0:property',
+  '@reso.context': 'urn:reso:metadata:2.0:resource:property',
   Country: 'US',
   StateOrProvince: 'CA',
   County: '06037',
