@@ -116,7 +116,7 @@ npm i RESOStandards/reso-upi-v2
 ```
 
 ## Installing and Running Locally
-If you would like to run the project locally, install [Node]([url](https://nodejs.org/en/download)) and [git]([url](https://github.com/git-guides/install-git)) if you don't have them already.
+If you would like to run the project locally, install [**Node**](https://nodejs.org/en/download) and [**git**](https://github.com/git-guides/install-git) if you don't have them already.
 
 ```
 > mkdir [PROJECT_LOCATION]
