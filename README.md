@@ -3,7 +3,7 @@
 
 # Universal Property Identifier (UPI) Version 2
 
-The UPI is a way to take a set of well-known identifiers and encode them in a way such that if two parties both have the same data, they can create the identifiers and match on them. This is useful for deduplicating data.
+The UPI is a way to take a set of well-known Property identifiers and encode them in a way such that if two parties both have the same data, they can create the identifiers and match on them. This is useful for deduplicating data.
 
 UPIs can also easily be searched on by parts and be used with URIs as part of a browser location or API URL, since they are friendly with existing URI standards.
 
@@ -108,15 +108,17 @@ We can do so using the `encode` function:
 
 # Installation
 
+## As an npm package
 To install from GitHub:
 
 ```
 npm i RESOStandards/reso-upi-v2
 ```
 
-If the installation hangs, you could follow this sequence from the command line.  If you do not have Mocha installed globally, the last line will install it locally.
+## Installing and Running Locally
+If you would like to run the project locally, install [Node]([url](https://nodejs.org/en/download)) and [git]([url](https://github.com/git-guides/install-git)) if you don't have them already.
 
- ```
+```
 > mkdir [PROJECT_LOCATION]
 > cd [PROJECT_LOCATION]
 > git clone https://github.com/RESOStandards/reso-upi-v2.git
@@ -124,8 +126,9 @@ If the installation hangs, you could follow this sequence from the command line.
 > npm install
 > npm install mocha
 ```
- To check the installation, run:
- ```
+
+To check the installation, run:
+```
 > npm run test
 ```
 
