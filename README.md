@@ -1,3 +1,6 @@
+[![Run Code Checks](https://github.com/RESOStandards/reso-upi-v2/actions/workflows/codecheck.yml/badge.svg)](https://github.com/RESOStandards/reso-upi-v2/actions/workflows/codecheck.yml) &nbsp; [![CodeQL](https://github.com/RESOStandards/reso-upi-v2/actions/workflows/codeql.yml/badge.svg)](https://github.com/RESOStandards/reso-upi-v2/actions/workflows/codeql.yml)
+
+
 # Universal Property Identifier (UPI) Version 2
 
 The UPI is a way to take a set of well-known identifiers and encode them in a way such that if two parties both have the same data, they can create the identifiers and match on them. This is useful for deduplicating data.
