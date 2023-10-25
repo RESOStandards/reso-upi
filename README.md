@@ -112,7 +112,7 @@ In the U.S., Parcel Numbers are a matter of public record. However, in other cou
 
 The matching and deduplication aspects of the UPI still work even when hashed since if the same components and data were used between two records, their hashes would be the same.
 
-As for choice of hashes, since we're dealing with particularly sensitive data that others wouldn't want shared, one-way hashing (i.e. cryptographic hashing) is a natural choice since they sufficiently obscure the source data. They're also NIS and global standards used in large-scale production environments like GitHub, Blockchain and Ethereum, as well as other scenarios and have support out of the box in most libraries. 
+As for choice of hashes, since we're dealing with particularly sensitive data that others wouldn't want shared, one-way hashing (i.e. cryptographic hashing) is a natural choice since it sufficiently obscures the source data. They're also [NIST]([url](https://csrc.nist.gov/projects/hash-functions)) and global standards used in large-scale production environments like GitHub, Blockchain and Ethereum, and have support out of the box in programming languages and frameworks. 
 
 One-way hashes also offer collision-resistance, which is important for the universality of the UPI.
 
