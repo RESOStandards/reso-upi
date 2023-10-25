@@ -114,7 +114,7 @@ The matching and de-duplication aspects of the UPI still work even when hashed s
 
 As for choice of hashes, since we're dealing with particularly sensitive data that others wouldn't want shared, one-way hashing (i.e. cryptographic hashes) are a natural choice since they sufficiently obscure the source data. They're also NIST/Global standards used in large-scale production environments like GitHub, Blockchain and Ethereum, as well as other scenarios and have support out of the box in most libraries. 
 
-They also have the nice (required) property that two items with identical data will always produce the same hashes, and offer collision-resistance, which is important for the universality of the UPI.
+One-way hashes also offer collision-resistance, which is important for the universality of the UPI.
 
 ## Example
 Let's assume we have the UPI created in earlier examples: 
