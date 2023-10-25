@@ -41,7 +41,7 @@ Let's look at the individual parts:
 * `subcounty` is an optional FIPS sub-county code, however it's empty here (`:subcounty::`)
 * `propertytype` is an optional Data Dictionary type, in this case Residential
 * `subpropertytype` is empty in this case
-* `parcelnumber` shows a number of weird characters, including brackets, colons, and spaces, but since the components are the delimeters, the original values are preserved
+* `parcelnumber` shows a number of weird characters, including brackets, colons, and spaces, but since the components are the delimiters, the original values are preserved
 * `subparcelnumber` is empty in this case (no values after the last `:`)
 
 This UPI can be decoded into a RESO Common Format payload using the `decode` function.
@@ -106,6 +106,41 @@ We can do so using the `encode` function:
 * Since the URN-based UPI essentially encodes key/value pairs, it's extensible and could even support local components.
 * The URN-based UPI is self-documenting and human friendly, since each component is explicitly named. We know that the first element is `:country:` and what its value is, and that the second value is `:stateorprovince:`, etc.
 
+# UPI Hashes
+
+In the U.S., Parcel Numbers are a matter of public record. However, in other countries / scenarios, there may be some data that cannot be conveyed due to intellectual property concerns or for other reasons.
+
+The matching and deduplication aspects of the UPI still work even when hashed since if the same components and data were used between two records, their hashes would be the same.
+
+As for choice of hashes, since we're dealing with particularly sensitive data that others wouldn't want shared, one-way hashing (i.e. cryptographic hashing) is a natural choice since they sufficiently obscure the source data. They're also NIS and global standards used in large-scale production environments like GitHub, Blockchain and Ethereum, as well as other scenarios and have support out of the box in most libraries. 
+
+One-way hashes also offer collision-resistance, which is important for the universality of the UPI.
+
+## Example
+Let's assume we have the UPI created in earlier examples: 
+
+```
+urn:reso:upi:2.0:country:US:stateorprovince:CA:county:06037:subcounty::propertytype:Residential:subpropertytype::parcelnumber: [abc] 1-2 ::   3:456 :subparcelnumber:
+```
+
+To create a UPI hash from this value, use the `hash` function:
+
+```js
+// Assume we're calling from the node REPL 
+// and in the root of the project directory
+> const { hash } = require('.'),
+  upi = 'urn:reso:upi:2.0:country:US:stateorprovince:CA:county:06037:subcounty::propertytype:Residential:subpropertytype::parcelnumber: [abc] 1-2 ::   3:456 :subparcelnumber:'
+
+> const upiHash = hash(upi);
+
+> upiHash
+
+'urn:reso:upi:2.0:sha3-256-hash:427c883322af677b76d72d43d9a00c3bedd6a1ede20e43c614f710abf85549a9'
+```
+
+Note that the component representing the UPI hash also includes the method that was used for hashing. This seems practical, and offers the ability to support different kinds of hashing, should the need arise. 
+
+
 # Installation
 
 ## As an npm package
@@ -134,3 +169,7 @@ To check the installation, run:
 
 For examples of how to use this library, see [**./test**](./test/test.js).
 
+# Contributing
+If you would like to suggest changes, [**please open a ticket**](https://github.com/RESOStandards/reso-upi-v2/issues).
+
+If you have changes to contribute, fork the repo, clone locally, make changes, then make a PR against this repo.
