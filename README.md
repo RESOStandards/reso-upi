@@ -106,6 +106,39 @@ We can do so using the `encode` function:
 * Since the URN-based UPI essentially encodes key/value pairs, it's extensible and could even support local components.
 * The URN-based UPI is self-documenting and human friendly, since each component is explicitly named. We know that the first element is `:country:` and what its value is, and that the second value is `:stateorprovince:`, etc.
 
+# UPI Hashes
+
+In the U.S., Parcel Numbers are a matter of public record. However, in other countries / scenarios, there may be some data that cannot be conveyed due to intellectual property concerns or for other reasons.
+
+The matching and de-duplication aspects of the UPI still work even when hashed since if the same components and data were used between two records, their hashes would be the same.
+
+As for choice of hashes, since we're dealing with particularly sensitive data that others wouldn't want shared, one-way hashing (i.e. cryptographic hashes) are a natural choice since they sufficiently obscure the source data. They're also NIST/Global standards used in large-scale production environments like GitHub, Blockchain and Ethereum, as well as other scenarios and have support out of the box in most libraries. 
+
+They also have the nice (required) property that two items with identical data will always produce the same hashes, and offer collision-resistance, which is important for the universality of the UPI.
+
+## Example
+Let's assume we have the UPI created in earlier examples: 
+
+```
+urn:reso:upi:2.0:country:US:stateorprovince:CA:county:06037:subcounty::propertytype:Residential:subpropertytype::parcelnumber: [abc] 1-2 ::   3:456 :subparcelnumber:
+```
+
+To create a UPI hash from this value, use the `hash` function:
+
+```js
+> const { hash } = require('.'),
+  upi = 'urn:reso:upi:2.0:country:US:stateorprovince:CA:county:06037:subcounty::propertytype:Residential:subpropertytype::parcelnumber: [abc] 1-2 ::   3:456 :subparcelnumber:'
+
+> const upiHash = hash(upi);
+
+> upiHash
+
+'urn:reso:upi:2.0:sha3-256-hash:427c883322af677b76d72d43d9a00c3bedd6a1ede20e43c614f710abf85549a9'
+```
+
+Note that the component representing the UPI hash also includes the method that was used for hashing. This seems practical, and offers the ability to support different kinds of hashing, should the need arise. 
+
+
 # Installation
 
 ## As an npm package
