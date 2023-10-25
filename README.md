@@ -41,7 +41,7 @@ Let's look at the individual parts:
 * `subcounty` is an optional FIPS sub-county code, however it's empty here (`:subcounty::`)
 * `propertytype` is an optional Data Dictionary type, in this case Residential
 * `subpropertytype` is empty in this case
-* `parcelnumber` shows a number of weird characters, including brackets, colons, and spaces, but since the components are the delimeters, the original values are preserved
+* `parcelnumber` shows a number of weird characters, including brackets, colons, and spaces, but since the components are the delimiters, the original values are preserved
 * `subparcelnumber` is empty in this case (no values after the last `:`)
 
 This UPI can be decoded into a RESO Common Format payload using the `decode` function.
@@ -110,9 +110,9 @@ We can do so using the `encode` function:
 
 In the U.S., Parcel Numbers are a matter of public record. However, in other countries / scenarios, there may be some data that cannot be conveyed due to intellectual property concerns or for other reasons.
 
-The matching and de-duplication aspects of the UPI still work even when hashed since if the same components and data were used between two records, their hashes would be the same.
+The matching and deduplication aspects of the UPI still work even when hashed since if the same components and data were used between two records, their hashes would be the same.
 
-As for choice of hashes, since we're dealing with particularly sensitive data that others wouldn't want shared, one-way hashing (i.e. cryptographic hashes) are a natural choice since they sufficiently obscure the source data. They're also NIST/Global standards used in large-scale production environments like GitHub, Blockchain and Ethereum, as well as other scenarios and have support out of the box in most libraries. 
+As for choice of hashes, since we're dealing with particularly sensitive data that others wouldn't want shared, one-way hashing (i.e. cryptographic hashing) is a natural choice since they sufficiently obscure the source data. They're also NIS and global standards used in large-scale production environments like GitHub, Blockchain and Ethereum, as well as other scenarios and have support out of the box in most libraries. 
 
 One-way hashes also offer collision-resistance, which is important for the universality of the UPI.
 
@@ -126,6 +126,8 @@ urn:reso:upi:2.0:country:US:stateorprovince:CA:county:06037:subcounty::propertyt
 To create a UPI hash from this value, use the `hash` function:
 
 ```js
+// Assume we're calling from the node REPL 
+// and in the root of the project directory
 > const { hash } = require('.'),
   upi = 'urn:reso:upi:2.0:country:US:stateorprovince:CA:county:06037:subcounty::propertytype:Residential:subpropertytype::parcelnumber: [abc] 1-2 ::   3:456 :subparcelnumber:'
 
