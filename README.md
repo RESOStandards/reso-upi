@@ -167,3 +167,7 @@ To check the installation, run:
 
 For examples of how to use this library, see [**./test**](./test/test.js).
 
+# Contributing
+If you would like to suggest changes, [**please open a ticket**](https://github.com/RESOStandards/reso-upi-v2/issues).
+
+If you have changes to contribute, fork the repo, clone locally, make changes, then make a PR against this repo.
