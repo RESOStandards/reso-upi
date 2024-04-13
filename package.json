@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "mocha",
-    "prepare": "husky install"
+    "prepare": ""
   },
   "repository": {
     "type": "git",
@@ -26,8 +26,6 @@
     "eslint-plugin-import": "^2.28.1",
     "eslint-plugin-n": "^16.2.0",
     "eslint-plugin-promise": "^6.1.1",
-    "husky": "^8.0.0",
-    "lint-staged": "^15.0.2",
     "mocha": "^10.2.0",
     "prettier": "^3.0.3"
   }
