@@ -1,78 +1,326 @@
 <html>
+  <head>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <script>
+      const buildUpi = ({
+        country,
+        subCountry,
+        parcelNumber,
+        subParcelNumber,
+      }) =>
+        `urn:reso:upi:2.0:${[country, subCountry, parcelNumber].join(":")}${
+          subParcelNumber.trim().length ? ":sub:" + subParcelNumber : ""
+        }`;
 
-<head>
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
-  <script>
-    const buildUpi = ({ country, subCountry, parcelNumber, subParcelNumber }) =>
-      `urn:reso:upi:2.0:${[country, subCountry, parcelNumber].join(':')}${subParcelNumber.trim().length ? ':sub:' + subParcelNumber : ''}`;
+      $(document).ready(function () {
+        $("#builder").on("submit", function (event) {
+          event.preventDefault();
 
-    $(document).ready(function () {
-      $('#builder').on('submit', function (event) {
+          const formData = $(this).serializeArray();
 
-        event.preventDefault();
+          const formDataObject = {};
+          formData.forEach(function (item) {
+            formDataObject[item.name] = item.value;
+          });
 
-        const formData = $(this).serializeArray();
-
-        const formDataObject = {};
-        formData.forEach(function (item) {
-          formDataObject[item.name] = item.value;
+          const text = buildUpi(formDataObject);
+          if (text.trim().length > 0) {
+            $("#rawValue").text(text);
+            $("#upi_text_container").addClass("show");
+          } else {
+            $("#upi_text_container").removeClass("show");
+          }
         });
+      });
 
-        $('#rawValue').text(buildUpi(formDataObject));
+      document.addEventListener("DOMContentLoaded", function () {
+        var infoIcons = document.querySelectorAll(".info-icon");
 
-      })
-    });
-  </script>
-</head>
-<title>RESO UPI Builder</title>
+        infoIcons.forEach(function (icon) {
+          icon.addEventListener("click", function () {
+            var tooltipText = this.nextElementSibling;
+            tooltipText.style.visibility =
+              tooltipText.style.visibility === "visible" ? "hidden" : "visible";
+            tooltipText.style.opacity =
+              tooltipText.style.opacity === "1" ? "0" : "1";
+          });
+        });
+      });
 
-<body>
-  <div>
-    <h1>RESO UPI Builder</h1>
-  </div>
-  <div>
-    <form id="builder" action="" method="post">
+      document.addEventListener("DOMContentLoaded", function () {
+        const copyButton = document.getElementById("copyButton");
+        const rawValue = document.getElementById("rawValue");
 
-      <div><label for="country">Country:</label>
-        <select type="text" id="country" name="country">
-          <option value="US" selected>US</option>
-        </select>
-      </div>
+        copyButton.addEventListener("click", function () {
+          const textToCopy = rawValue.textContent;
 
-      <br />
+          navigator.clipboard
+            .writeText(textToCopy)
+            .then(function () {
+              console.log("Text copied to clipboard: " + textToCopy);
+              // You can add any additional behavior here, such as showing a success message
+            })
+            .catch(function (error) {
+              console.error("Error copying text: ", error);
+              // You can handle errors here, such as showing an error message to the user
+            });
+        });
+      });
+    </script>
+    <style>
+      body {
+        font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
+          "Roboto", "Oxygen", "Ubuntu", "Fira Sans", "Droid Sans",
+          "Helvetica Neue", sans-serif;
+        margin: 0;
+        padding: 0;
+        display: flex;
+        justify-content: center;
+        height: 100vh;
+        width: 100%;
+        flex-direction: column;
+      }
 
-      <div><label for="subCountry">SubCountry:</label>
-        <input type="text" id="subCountry" name="subCountry" placeholder="48201" required />
-      </div>
+      .container {
+        max-width: 400px;
+        align-self: center;
+        width: 100%;
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: space-between;
+      }
+      .country-label {
+        display: flex;
+        align-items: center;
+      }
 
-      <br />
+      .country-label svg {
+        width: 14px;
+        height: 14px;
+        margin-left: 5px;
+        margin-right: 5px;
+      }
 
-      <div>
-        <label for="parcelNumber">ParcelNumber:</label>
-        <input type="text" id="parcelNumber" name="parcelNumber" placeholder="R000022230" required />
-      </div>
+      .country-label:hover + .tooltip-text {
+        visibility: visible;
+        opacity: 1;
+      }
 
-      <br />
+      .tooltip-text {
+        visibility: hidden;
+        width: 150px;
+        background-color: #555;
+        color: #fff;
+        text-align: center;
+        border-radius: 6px;
+        padding: 5px;
+        position: absolute;
+        z-index: 1;
+        top: calc(100% + 5px);
+        left: 50%;
+        transform: translateX(-50%);
+        opacity: 0;
+        transition: opacity 0.3s;
+      }
 
-      <div>
-        <label for="subParcelNumber">SubParcelNumber:</label>
-        <input type="text" id="subParcelNumber" name="subParcelNumber" placeholder="78 - 9.aB"></input>
-      </div>
+      .container:hover .tooltip-text {
+        visibility: visible;
+        opacity: 1;
+      }
 
-      <br />
+      .heading {
+        margin-right: 20px;
+      }
 
-      <div>
-        <button type="submit">Build UPI</button>
-      </div>
+      .heading span {
+        display: inline-block;
+      }
 
-      <br />
+      .back-button {
+        color: blue;
+        border: none;
+        cursor: pointer;
+        text-decoration: none;
+        display: inline-block;
+      }
 
-      <div>
-        <span id="rawValue"></span>
-      </div>
-    </form>
-  </div>
+      .back-button:hover {
+        text-decoration: underline;
+      }
 
-</body>
+      form {
+        max-width: 400px;
+        margin: 20px auto;
+        padding: 20px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+      }
 
+      label {
+        display: block;
+        margin-bottom: 5px;
+      }
+
+      .upi_container {
+        padding: 12px 10px;
+        background-color: #f6f8fa;
+        justify-content: space-between;
+        display: none;
+      }
+      .upi_container.show {
+        display: flex;
+      }
+
+      input[type="text"],
+      input[type="email"],
+      input[type="number"],
+      select {
+        width: 100%;
+        padding: 8px;
+        margin-bottom: 10px;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        box-sizing: border-box;
+      }
+
+      button[type="submit"] {
+        background-color: #4caf50;
+        color: white;
+        padding: 10px 20px;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+      }
+
+      button[type="submit"]:hover {
+        background-color: #45a049;
+      }
+
+      .tooltip {
+        position: relative;
+        display: inline-block;
+      }
+
+      .tooltip .tooltip-text {
+        visibility: hidden;
+        width: 120px;
+        background-color: #555;
+        color: #fff;
+        text-align: center;
+        border-radius: 6px;
+        padding: 5px 0;
+        position: absolute;
+        z-index: 1;
+        top: 100%;
+        left: 50%;
+        transform: translateX(-50%);
+        opacity: 0;
+        transition: opacity 0.3s;
+      }
+
+      .tooltip:hover .tooltip-text {
+        visibility: visible;
+        opacity: 1;
+      }
+    </style>
+  </head>
+  <title>RESO UPI Builder</title>
+
+  <body>
+    <div class="container">
+      <h1>RESO UPI Builder</h1>
+    </div>
+    <div>
+      <form id="builder" action="" method="post">
+        <div class="sub-container">
+          <label for="country" class="country-label">
+            Country
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            >
+              <circle cx="12" cy="12" r="10" />
+              <line x1="12" y1="16" x2="12" y2="12" />
+              <line x1="12" y1="8" x2="12" y2="8" />
+            </svg>
+          </label>
+          <select type="text" id="country" name="country">
+            <option value="US" selected>US</option>
+          </select>
+          <span class="tooltip-text">Select your country</span>
+        </div>
+        <br />
+
+        <div>
+          <label for="subCountry" class="country-label"
+            >SubCountry
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            >
+              <circle cx="12" cy="12" r="10" />
+              <line x1="12" y1="16" x2="12" y2="12" />
+              <line x1="12" y1="8" x2="12" y2="8" />
+            </svg>
+          </label>
+          <input
+            type="text"
+            id="subCountry"
+            name="subCountry"
+            placeholder="48201"
+            required
+          />
+        </div>
+
+        <br />
+
+        <div>
+          <label for="parcelNumber">ParcelNumber</label>
+          <input
+            type="text"
+            id="parcelNumber"
+            name="parcelNumber"
+            placeholder="R000022230"
+            required
+          />
+        </div>
+
+        <br />
+
+        <div>
+          <label for="subParcelNumber">SubParcelNumber</label>
+          <input
+            type="text"
+            id="subParcelNumber"
+            name="subParcelNumber"
+            placeholder="78 - 9.aB"
+          />
+        </div>
+
+        <br />
+
+        <div>
+          <button type="submit">Build UPI</button>
+        </div>
+
+        <br />
+
+        <div class="upi_container" id="upi_text_container">
+          <span id="rawValue"></span>
+          <button id="copyButton">Copy</button>
+        </div>
+      </form>
+    </div>
+  </body>
 </html>
