@@ -1,0 +1,78 @@
+<html>
+
+<head>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+  <script>
+    const buildUpi = ({ country, subCountry, parcelNumber, subParcelNumber }) =>
+      `urn:reso:upi:2.0:${[country, subCountry, parcelNumber].join(':')}${subParcelNumber.trim().length ? ':sub:' + subParcelNumber : ''}`;
+
+    $(document).ready(function () {
+      $('#builder').on('submit', function (event) {
+
+        event.preventDefault();
+
+        const formData = $(this).serializeArray();
+
+        const formDataObject = {};
+        formData.forEach(function (item) {
+          formDataObject[item.name] = item.value;
+        });
+
+        $('#rawValue').text(buildUpi(formDataObject));
+
+      })
+    });
+  </script>
+</head>
+<title>RESO UPI Builder</title>
+
+<body>
+  <div>
+    <h1>RESO UPI Builder</h1>
+  </div>
+  <div>
+    <form id="builder" action="" method="post">
+
+      <div><label for="country">Country:</label>
+        <select type="text" id="country" name="country">
+          <option value="US" selected>US</option>
+        </select>
+      </div>
+
+      <br />
+
+      <div><label for="subCountry">SubCountry:</label>
+        <input type="text" id="subCountry" name="subCountry" placeholder="48201" required />
+      </div>
+
+      <br />
+
+      <div>
+        <label for="parcelNumber">ParcelNumber:</label>
+        <input type="text" id="parcelNumber" name="parcelNumber" placeholder="R000022230" required />
+      </div>
+
+      <br />
+
+      <div>
+        <label for="subParcelNumber">SubParcelNumber:</label>
+        <input type="text" id="subParcelNumber" name="subParcelNumber" placeholder="78 - 9.aB"></input>
+      </div>
+
+      <br />
+
+      <div>
+        <button type="submit">Build UPI</button>
+      </div>
+
+      <br />
+
+      <div>
+        <span id="rawValue"></span>
+      </div>
+    </form>
+  </div>
+
+</body>
+
+</html>
