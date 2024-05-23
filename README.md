@@ -1,4 +1,4 @@
-<a href="https://github.com/RESOStandards/reso-upi" align="middle"><img src="https://github.com/RESOStandards/reso-upi/assets/535358/b1663b4e-ca5b-4997-9654-77d6e9b07279" width="24" height="24" align="top"><b>View on GitHub</b></img></a>
+<a href="https://github.com/RESOStandards/reso-upi" align="middle"><img src="https://github.com/RESOStandards/reso-upi/assets/535358/b1663b4e-ca5b-4997-9654-77d6e9b07279" width="24" height="24" align="top" /><b>View on GitHub</b></a>
 
 [![Run Code Checks](https://github.com/RESOStandards/reso-upi-v2/actions/workflows/codecheck.yml/badge.svg)](https://github.com/RESOStandards/reso-upi-v2/actions/workflows/codecheck.yml) &nbsp; [![CodeQL](https://github.com/RESOStandards/reso-upi-v2/actions/workflows/codeql.yml/badge.svg)](https://github.com/RESOStandards/reso-upi-v2/actions/workflows/codeql.yml)
 
