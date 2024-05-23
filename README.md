@@ -1,10 +1,4 @@
-[![Run Code Checks](https://github.com/RESOStandards/reso-upi-v2/actions/workflows/codecheck.yml/badge.svg)](https://github.com/RESOStandards/reso-upi-v2/actions/workflows/codecheck.yml) &nbsp; [![CodeQL](https://github.com/RESOStandards/reso-upi-v2/actions/workflows/codeql.yml/badge.svg)](https://github.com/RESOStandards/reso-upi-v2/actions/workflows/codeql.yml)
-
-<a href="https://github.com/RESOStandards/reso-upi" align="middle"><img src="https://github.com/RESOStandards/reso-upi/assets/535358/b1663b4e-ca5b-4997-9654-77d6e9b07279" width="24" height="24" align="top" /><b>View on GitHub</b></a>
-
-<hr />
-
-# RESO Universal Property Identifier (UPI)
+# Overview
 
 The RESO Universal Property Identifier (UPI) is a standard for a single identifier that includes both parcel numbers and the geographies of the authorities that created them. By implementing a UPI within property information records, data providers and consumers can improve data alignment across systems and avoid parcel number collisions.
 
@@ -110,14 +104,22 @@ The hashed UPI, which includes both the version (`2.0`) and hash function used (
 urn:reso:upi:2.0:sha3-256:dc7a33c65e3aef98ea21501841f9240cdf3e7ff5441c98d824f44ddee362f1d2
 ```
 
-# Authors
+# Contributors
 * [**Mark Bessett** (RESO UPI Chair)](mailto:mark@smartcodefxllc.com)
 * [**Matt Casey** (RESO UPI Vice-Chair)](mailto:mcasey@crsdata.com)
 * [**Josh Darnell** (RESO)](mailto:josh@reso.org)
 * [**Sam DeBord** (RESO)](mailto:sam@reso.org)
+* [**Mark Lesswing**](mailto:mark@lesswing.com)
 * **RESO UPI Workgroup**
 
 # Contributing
 If you would like to suggest changes, [**please open a ticket**](https://github.com/RESOStandards/reso-upi/issues).
 
 If you have code changes to contribute, fork the repo, clone locally, make the changes, and then make a PR against this repo.
+
+<a href="https://github.com/RESOStandards/reso-upi" align="middle"><img src="https://github.com/RESOStandards/reso-upi/assets/535358/b1663b4e-ca5b-4997-9654-77d6e9b07279" width="24" height="24" align="top" /><b>View on GitHub</b></a>
+
+<br />
+
+[![Run Code Checks](https://github.com/RESOStandards/reso-upi-v2/actions/workflows/codecheck.yml/badge.svg)](https://github.com/RESOStandards/reso-upi-v2/actions/workflows/codecheck.yml) &nbsp; [![CodeQL](https://github.com/RESOStandards/reso-upi-v2/actions/workflows/codeql.yml/badge.svg)](https://github.com/RESOStandards/reso-upi-v2/actions/workflows/codeql.yml)
+
