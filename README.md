@@ -38,6 +38,8 @@ urn:reso:upi:<Version>:<Country>:<SubCountry>:<ParcelNumber>[:sub:<SubParcelNumb
 
 where the items in angle brackets are required and the items in square brackets are optional.
 
+[**Try the UPI Builder**](./builder/index.html)
+
 ## Example: Basic UPI
 
 ```
