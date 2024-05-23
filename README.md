@@ -1,6 +1,6 @@
 [![Run Code Checks](https://github.com/RESOStandards/reso-upi-v2/actions/workflows/codecheck.yml/badge.svg)](https://github.com/RESOStandards/reso-upi-v2/actions/workflows/codecheck.yml) &nbsp; [![CodeQL](https://github.com/RESOStandards/reso-upi-v2/actions/workflows/codeql.yml/badge.svg)](https://github.com/RESOStandards/reso-upi-v2/actions/workflows/codeql.yml)
 
-# RESO Universal Property Identifier (UPI)
+# Overview
 
 The RESO Universal Property Identifier (UPI) is a standard for a single identifier that includes both parcel numbers and the geographies of the authorities that created them. By implementing a UPI within property information records, data providers and consumers can improve data alignment across systems and avoid parcel number collisions.
 
@@ -34,7 +34,7 @@ urn:reso:upi:<Version>:<Country>:<SubCountry>:<ParcelNumber>[:sub:<SubParcelNumb
 
 where the items in square brackets are optional.
 
-[**Try the UPI Builder**](./html/upi-builder.html)
+[**Try the UPI Builder**](./builder/index.html)
 
 ## Example: Basic UPI
 
