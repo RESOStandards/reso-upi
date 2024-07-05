@@ -1,3 +1,6 @@
+![RESO-Logo-Fullname_Horizontal_Black-10](https://github.com/RESOStandards/reso-upi/assets/535358/a7daea5e-1f7e-408c-87a1-a2d97ca3814a)
+
+
 # Overview
 
 The RESO Universal Property Identifier (UPI) is a standard for a single identifier that includes both parcel numbers and the geographies of the authorities that created them. By implementing a UPI within property information records, data providers and consumers can improve data alignment across systems and avoid parcel number collisions.
