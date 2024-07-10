@@ -16,7 +16,7 @@ The UPI uses the following data elements in its construction:
 * **Country** - an [**ISO 3166**](https://en.wikipedia.org/wiki/List_of_ISO_3166_country_codes) country code, e.g. US.
 * **Subcountry** - a country-specific formula identifying the country subdivison of the authority that issued the parcel number. In the U.S., [**GEOIDs**](https://www.census.gov/programs-surveys/geography/guidance/geo-identifiers.html) are used. In the EU, [**NUTS**](https://ec.europa.eu/eurostat/web/nuts/overview) is used. Other countries may have their own country subdivisions.
 * **ParcelNumber** - the [**parcel number**](https://ddwiki.reso.org/display/DDW20/ParcelNumber+Field) for a given real property.
-* **Number** - the sub-parcel, when applicable.
+* **SubparcelNumber** - the sub-parcel, when applicable.
 
 
 ## Uniform Resource Names (URNs)
@@ -29,7 +29,7 @@ RESO has a reserved URN which includes v1 UPI identifiers. [**See section 3.4.2*
 The format of the UPI is as follows:
 
 ```
-urn:reso:upi:<Version>:<Country>:<Subcountry>:<ParcelNumber>[:sub:<Number>]
+urn:reso:upi:<Version>:<Country>:<Subcountry>:<ParcelNumber>[:sub:<SubparcelNumber>]
 ```
 
 where the items in angle brackets are required and the items in square brackets are optional.
@@ -49,17 +49,17 @@ urn:reso:upi:2.0:US:48201:R000022230
 * `R000022230` is the parcel number.
 
 
-## Example: UPI with Number
-UPIs can also be used to identify  elements of a property, such as parking spaces, outbuildings or air rights. The UPI, with its fixed number of preparcel components separated by colons, can be extended with a `:sub:` component label followed by the  item identifier.
+## Example: UPI with SubparcelNumber
+UPIs can also be used to identify elements of a property, such as parking spaces, outbuildings or air rights. The UPI, with its fixed number of preparcel components separated by colons, can be extended with a `:sub:` component label followed by the SubparcelNumber identifier.
 
 ```
 urn:reso:upi:2.0:US:48201:R000022230:sub:78 - 9.aB
 ```
 
-* `:sub:` is the extended component label.
+* `:sub:` is the subparcel component separator.
 * `78 - 9.aB` is the  identifier for one of many property elements on the parcel.
 
-Since the core UPI contains a fixed number of colon-separated components, special characters that exist within components of the UPI are supported. Even colons within a parcel number will be identified as such because of the fixed number of preparcel components for the overall model. In the preceding example, the Number component has special characters.
+Since the core UPI contains a fixed number of colon-separated components, special characters that exist within components of the UPI are supported. Even colons within a parcel number will be identified as such because of the fixed number of preparcel components for the overall model. In the preceding example, the SubparcelNumber component has special characters.
 
 # Considerations
 
