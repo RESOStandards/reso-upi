@@ -1,462 +1,413 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
-    <script>
-      const buildUpi = ({
-        country,
-        subCountry,
-        parcelNumber,
-        subParcelNumber,
-      }) =>
-        `urn:reso:upi:2.0:${[country, subCountry, parcelNumber].join(":")}${
-          subParcelNumber.trim().length ? ":sub:" + subParcelNumber : ""
-        }`;
-      // Event listener to submit form and build upi text
-      document.addEventListener("DOMContentLoaded", function () {
-        document
-          .getElementById("builder")
-          .addEventListener("submit", function (event) {
-            event.preventDefault();
-            const formData = new FormData(this);
-            const formDataObject = {};
-            for (const [key, value] of formData.entries()) {
-              formDataObject[key] = value;
-            }
-            const text = buildUpi(formDataObject);
-            if (text.trim().length > 0) {
-              document.getElementById("upiValue").textContent = text;
-              document
-                .getElementById("upi-text-container")
-                .classList.add("show");
-              document.getElementById(
-                "placeholder-upi-container"
-              ).style.display = "none";
-            } else {
-              document
-                .getElementById("upi-text-container")
-                .classList.remove("show");
-            }
-          });
-      });
-      // Event listener for tooltips and toggling them
-      document.addEventListener("DOMContentLoaded", function () {
-        var infoIcons = document.querySelectorAll(".info-icon");
-        infoIcons.forEach(function (icon) {
-          icon.addEventListener("click", function (event) {
-            event.stopPropagation();
-            // Get tooltip text element
-            var tooltipTextElement =
-              this.closest(".sub-container").querySelector(".tooltip-text");
-            // Hide other tooltips
+
+<head>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+  <script>
+    const buildUpi = ({
+      country,
+      countrySubdivision,
+      parcelNumber,
+      parcelSubcomponent,
+    }) =>
+      `urn:reso:upi:2.0:${[country, countrySubdivision, parcelNumber].join(":")}${parcelSubcomponent && parcelSubcomponent?.trim()?.length ? ":sub:" + parcelSubcomponent : ""
+      }`;
+    // Event listener to submit form and build upi text
+    document.addEventListener("DOMContentLoaded", function () {
+      document
+        .getElementById("builder")
+        .addEventListener("submit", function (event) {
+          event.preventDefault();
+          const formData = new FormData(this);
+          const formDataObject = {};
+          for (const [key, value] of formData.entries()) {
+            formDataObject[key] = value;
+          }
+          const text = buildUpi(formDataObject);
+          if (text.trim().length > 0) {
+            document.getElementById("upiValue").textContent = text;
             document
-              .querySelectorAll(".tooltip-text")
-              .forEach(function (tooltip) {
-                if (tooltip !== tooltipTextElement) {
-                  tooltip.style.visibility = "hidden";
-                  tooltip.style.opacity = "0";
-                }
-              });
-            // Toggle clicked tooltip
-            tooltipTextElement.style.visibility =
-              tooltipTextElement.style.visibility === "visible"
-                ? "hidden"
-                : "visible";
-            tooltipTextElement.style.opacity =
-              tooltipTextElement.style.opacity === "1" ? "0" : "1";
-          });
-        });
-        // Event listener for clicking outside tooltips and hide them
-        document.addEventListener("click", function (event) {
-          var clickedElement = event.target;
-          var tooltips = document.querySelectorAll(".tooltip-text");
-          var isTooltipOrContainerClicked =
-            clickedElement.closest(".sub-container") !== null;
-          // If clicked element is neither a tooltip icon nor its container, hide all tooltips
-          if (!isTooltipOrContainerClicked) {
-            tooltips.forEach(function (tooltip) {
-              tooltip.style.visibility = "hidden";
-              tooltip.style.opacity = "0";
-            });
+              .getElementById("upi-text-container")
+              .classList.add("show");
+            document.getElementById(
+              "placeholder-upi-container"
+            ).style.display = "none";
+          } else {
+            document
+              .getElementById("upi-text-container")
+              .classList.remove("show");
           }
         });
-        const copyButton = document.getElementById("copyIcon");
-        const tickIcon = document.getElementById("tickIcon");
-        const tooltip = document.getElementById("copiedTooltip");
-        const upiValue = document.getElementById("upiValue");
-        copyButton.addEventListener("click", function () {
-          // Hide copy icon and show tick icon
-          copyIcon.style.display = "none";
-          tickIcon.style.display = "inline-block";
-          // Revert back to copy icon after 2 sec
-          setTimeout(function () {
-            copyIcon.style.display = "inline-block";
-            tickIcon.style.display = "none";
-          }, 2000);
-          // Show copied tooltip
-          tooltip.style.display = "block";
-          // Hide copied tooltip after 2 sec
-          setTimeout(function () {
-            tooltip.style.display = "none";
-          }, 2000);
-          // Copy text value to clipboard
-          const textToCopy = upiValue.textContent;
-          navigator.clipboard
-            .writeText(textToCopy)
-            .then(function () {
-              console.log("Text copied to clipboard: " + textToCopy);
-            })
-            .catch(function (error) {
-              console.error("Error copying text: ", error);
+    });
+    // Event listener for tooltips and toggling them
+    document.addEventListener("DOMContentLoaded", function () {
+      var infoIcons = document.querySelectorAll(".info-icon");
+      infoIcons.forEach(function (icon) {
+        icon.addEventListener("click", function (event) {
+          event.stopPropagation();
+          // Get tooltip text element
+          var tooltipTextElement =
+            this.closest(".sub-container").querySelector(".tooltip-text");
+          // Hide other tooltips
+          document
+            .querySelectorAll(".tooltip-text")
+            .forEach(function (tooltip) {
+              if (tooltip !== tooltipTextElement) {
+                tooltip.style.visibility = "hidden";
+                tooltip.style.opacity = "0";
+              }
             });
+          // Toggle clicked tooltip
+          tooltipTextElement.style.visibility =
+            tooltipTextElement.style.visibility === "visible"
+              ? "hidden"
+              : "visible";
+          tooltipTextElement.style.opacity =
+            tooltipTextElement.style.opacity === "1" ? "0" : "1";
         });
       });
-    </script>
-    <style>
-      body {
-        font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
-          "Roboto", "Oxygen", "Ubuntu", "Fira Sans", "Droid Sans",
-          "Helvetica Neue", sans-serif;
-        margin: 0;
-        padding: 0;
-        display: flex;
-        justify-content: center;
-        height: 100vh;
-        width: 100%;
-        flex-direction: column;
-      }
-      .wrapper-container {
-        margin: 12px;
-        display: flex;
-        flex-direction: column;
-      }
-      .container {
-        align-self: center;
-        display: flex;
-        flex-direction: row;
-        align-items: center;
-        justify-content: space-between;
-      }
-      form {
-        max-width: 400px;
-        margin: 20px auto;
-        padding: 20px;
-        border: 1px solid #ccc;
-        border-radius: 5px;
-        position: relative;
-      }
-      label {
-        display: block;
-        margin-bottom: 5px;
-      }
-      .country-label {
-        display: flex;
-        align-items: center;
-      }
-      .country-label svg {
-        width: 14px;
-        height: 14px;
-        margin-left: 5px;
-        margin-right: 5px;
-      }
-      .more-info {
-        color: blue;
-        cursor: pointer;
-        text-decoration: none;
-        right: 0;
-        padding: 0px 20px;
-        font-size: 12px;
-        font-weight: 600;
-        position: absolute;
-      }
-      .more-info:hover {
-        text-decoration: underline;
-      }
-      .upi-container {
-        background-color: #f6f8fa;
-        justify-content: space-between;
-        display: none;
-        position: relative;
-        margin-bottom: 8px;
-        align-items: center;
-      }
-      .upi-container.show {
-        display: flex;
-        position: relative;
-      }
-      .upi-text-value {
-        color: #4b5563;
-        width: 80%;
-        overflow-y: auto;
-        padding: 12px 10px;
-        white-space: nowrap;
-      }
-   
-      input[type="text"],
-      input[type="email"],
-      input[type="number"],
-      select {
-        width: 100%;
-        padding: 8px;
-        margin-bottom: 10px;
-        border: 1px solid #ccc;
-        border-radius: 4px;
-        box-sizing: border-box;
-      }
-      select:focus {
-        outline: none;
-      }
-      input:focus {
-        outline: none;
-      }
-      button[type="submit"] {
-        background-color: #4caf50;
-        color: white;
-        padding: 10px 20px;
-        border: none;
-        border-radius: 4px;
-        cursor: pointer;
-      }
-      button[type="submit"]:hover {
-        background-color: #45a049;
-      }
-      .tooltip-icon {
-        cursor: pointer;
-        margin-left: 5px;
-        position: relative;
-        color: #4b5563;
-      }
-      .tooltip-icon:hover {
-        color: black;
-      }
-      .tooltip {
-        position: relative;
-        display: inline-block;
-      }
-      .tooltip-text {
-        visibility: hidden;
-        opacity: 0;
-        background-color: #f3f4f6;
-        color: #374151;
-        border-radius: 2px;
-        padding: 8px;
-        position: absolute;
-        z-index: 1;
-        top: 24px;
-        width: fit-content;
-        border: 1px solid darkgray;
-        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-      }
-      .tooltip:hover .tooltip-text {
-        visibility: visible;
-        opacity: 1;
-      }
-      .sub-container {
-        display: flex;
-        flex-direction: column;
-        position: relative;
-      }
-      .tooltip-link {
-        color: #1670dc;
-      }
-      .copied-tooltip {
-        display: none;
-        font-size: 10px;
-        padding: 4px 6px;
-        background: black;
-        position: absolute;
-        top: -10px;
-        right: 0;
-        color: white;
-        border-radius: 4px;
-      }
-      .placeholder-upi-container {
-        height: 44px;
-        margin-bottom: 8px;
-      }
-      #copyIcon:hover {
-        fill: #4b5563;
-      }
-    </style>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  </head>
-  <title>RESO UPI Builder</title>
-  <body>
-    <div class="wrapper-container">
-      <div class="container">
-        <h1>RESO UPI Builder</h1>
-      </div>
-      <div>
-        <form id="builder" action="" method="post">
-          <div class="sub-container">
-            <label for="country" class="country-label">
-              Country
-              <span class="tooltip-icon info-icon">
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  stroke-width="2.5"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                >
-                  <circle cx="12" cy="12" r="10" />
-                  <line x1="12" y1="16" x2="12" y2="12" />
-                  <line x1="12" y1="8" x2="12" y2="8" />
-                </svg>
-              </span>
-            </label>
-            <select type="text" id="country" name="country">
-              <option value="US" selected>US</option>
-            </select>
-            <span class="tooltip-text"
-              >The two-letter
-              <a
-                href="https://en.wikipedia.org/wiki/List_of_ISO_3166_country_codes"
-                target="_blank"
-                class="tooltip-link"
-                >ISO 3166 country code</a
-              >
-              of the parcel.</span
-            >
-          </div>
-          <br />
-          <div class="sub-container">
-            <label for="subCountry" class="country-label"
-              >SubCountry
-              <span class="tooltip-icon info-icon">
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  stroke-width="2.5"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                >
-                  <circle cx="12" cy="12" r="10" />
-                  <line x1="12" y1="16" x2="12" y2="12" />
-                  <line x1="12" y1="8" x2="12" y2="8" />
-                </svg>
-              </span>
-            </label>
-            <input
-              type="text"
-              id="subCountry"
-              name="subCountry"
-              placeholder="48201"
-              required
-            />
-            <span class="tooltip-text"
-              >A country-specific formula identifying the country subdivison of
-              the authority that issued the parcel number. In the U.S.,
-              <a
-                href="https://www.census.gov/programs-surveys/geography/guidance/geo-identifiers.html"
-                target="_blank"
-                class="tooltip-link"
-                >GEOIDs</a
-              >
-              are used. In the EU,
-              <a
-                href="https://ec.europa.eu/eurostat/web/nuts/overview"
-                target="_blank"
-                class="tooltip-link"
-                >NUTS</a
-              >
-              is used. Other countries may have their own country
-              subdivisions.</span
-            >
-          </div>
-          <br />
-          <div>
-            <label for="parcelNumber">ParcelNumber</label>
-            <input
-              type="text"
-              id="parcelNumber"
-              name="parcelNumber"
-              placeholder="R000022230"
-              required
-            />
-          </div>
-          <br />
-          <div>
-            <label for="subParcelNumber">SubParcelNumber</label>
-            <input
-              type="text"
-              id="subParcelNumber"
-              name="subParcelNumber"
-              placeholder="78 - 9.aB"
-            />
-          </div>
-          <br />
-          <div>
-            <button type="submit">Build UPI</button>
-          </div>
-          <br />
-          <div
-            class="placeholder-upi-container"
-            id="placeholder-upi-container"
-          ></div>
-          <div class="upi-container" id="upi-text-container">
-            <span class="upi-text-value" id="upiValue"></span>
-            <svg
-              id="copyIcon"
-              aria-hidden="true"
-              focusable="false"
-              role="img"
-              class="octicon octicon-copy"
-              viewBox="0 0 16 16"
-              width="16"
-              height="16"
-              fill="#6b7280"
-              style="
+      // Event listener for clicking outside tooltips and hide them
+      document.addEventListener("click", function (event) {
+        var clickedElement = event.target;
+        var tooltips = document.querySelectorAll(".tooltip-text");
+        var isTooltipOrContainerClicked =
+          clickedElement.closest(".sub-container") !== null;
+        // If clicked element is neither a tooltip icon nor its container, hide all tooltips
+        if (!isTooltipOrContainerClicked) {
+          tooltips.forEach(function (tooltip) {
+            tooltip.style.visibility = "hidden";
+            tooltip.style.opacity = "0";
+          });
+        }
+      });
+      const copyButton = document.getElementById("copyIcon");
+      const tickIcon = document.getElementById("tickIcon");
+      const tooltip = document.getElementById("copiedTooltip");
+      const upiValue = document.getElementById("upiValue");
+      copyButton.addEventListener("click", function () {
+        // Hide copy icon and show tick icon
+        copyIcon.style.display = "none";
+        tickIcon.style.display = "inline-block";
+        // Revert back to copy icon after 2 sec
+        setTimeout(function () {
+          copyIcon.style.display = "inline-block";
+          tickIcon.style.display = "none";
+        }, 2000);
+        // Show copied tooltip
+        tooltip.style.display = "block";
+        // Hide copied tooltip after 2 sec
+        setTimeout(function () {
+          tooltip.style.display = "none";
+        }, 2000);
+        // Copy text value to clipboard
+        const textToCopy = upiValue.textContent;
+        navigator.clipboard
+          .writeText(textToCopy)
+          .then(function () {
+            console.log("Text copied to clipboard: " + textToCopy);
+          })
+          .catch(function (error) {
+            console.error("Error copying text: ", error);
+          });
+      });
+    });
+  </script>
+  <style>
+    body {
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
+        "Roboto", "Oxygen", "Ubuntu", "Fira Sans", "Droid Sans",
+        "Helvetica Neue", sans-serif;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      justify-content: center;
+      height: 100vh;
+      width: 100%;
+      flex-direction: column;
+    }
+
+    .wrapper-container {
+      margin: 12px;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .container {
+      align-self: center;
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    form {
+      max-width: 400px;
+      margin: 20px auto;
+      padding: 20px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      position: relative;
+    }
+
+    label {
+      display: block;
+      margin-bottom: 5px;
+    }
+
+    .country-label {
+      display: flex;
+      align-items: center;
+    }
+
+    .country-label svg {
+      width: 14px;
+      height: 14px;
+      margin-left: 5px;
+      margin-right: 5px;
+    }
+
+    .more-info {
+      color: blue;
+      cursor: pointer;
+      text-decoration: none;
+      right: 0;
+      padding: 0px 20px;
+      font-size: 12px;
+      font-weight: 600;
+      position: absolute;
+    }
+
+    .more-info:hover {
+      text-decoration: underline;
+    }
+
+    .upi-container {
+      background-color: #f6f8fa;
+      justify-content: space-between;
+      display: none;
+      position: relative;
+      margin-bottom: 8px;
+      align-items: center;
+    }
+
+    .upi-container.show {
+      display: flex;
+      position: relative;
+    }
+
+    .upi-text-value {
+      color: #4b5563;
+      width: 80%;
+      overflow-y: auto;
+      padding: 12px 10px;
+      white-space: nowrap;
+    }
+
+    input[type="text"],
+    input[type="email"],
+    input[type="number"],
+    select {
+      width: 100%;
+      padding: 8px;
+      margin-bottom: 10px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      box-sizing: border-box;
+    }
+
+    select:focus {
+      outline: none;
+    }
+
+    input:focus {
+      outline: none;
+    }
+
+    button[type="submit"] {
+      background-color: #4caf50;
+      color: white;
+      padding: 10px 20px;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+
+    button[type="submit"]:hover {
+      background-color: #45a049;
+    }
+
+    .tooltip-icon {
+      cursor: pointer;
+      margin-left: 5px;
+      position: relative;
+      color: #4b5563;
+    }
+
+    .tooltip-icon:hover {
+      color: black;
+    }
+
+    .tooltip {
+      position: relative;
+      display: inline-block;
+    }
+
+    .tooltip-text {
+      visibility: hidden;
+      opacity: 0;
+      background-color: #f3f4f6;
+      color: #374151;
+      border-radius: 2px;
+      padding: 8px;
+      position: absolute;
+      z-index: 1;
+      top: 24px;
+      width: fit-content;
+      border: 1px solid darkgray;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
+
+    .tooltip:hover .tooltip-text {
+      visibility: visible;
+      opacity: 1;
+    }
+
+    .sub-container {
+      display: flex;
+      flex-direction: column;
+      position: relative;
+    }
+
+    .tooltip-link {
+      color: #1670dc;
+    }
+
+    .copied-tooltip {
+      display: none;
+      font-size: 10px;
+      padding: 4px 6px;
+      background: black;
+      position: absolute;
+      top: -10px;
+      right: 0;
+      color: white;
+      border-radius: 4px;
+    }
+
+    .placeholder-upi-container {
+      height: 44px;
+      margin-bottom: 8px;
+    }
+
+    #copyIcon:hover {
+      fill: #4b5563;
+    }
+  </style>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+</head>
+<title>RESO UPI Builder</title>
+
+<body>
+  <div class="wrapper-container">
+    <div class="container">
+      <h1>RESO UPI Builder</h1>
+    </div>
+    <div>
+      <form id="builder" action="" method="post">
+        <div class="sub-container">
+          <label for="country" class="country-label">
+            Country
+            <span class="tooltip-icon info-icon">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="12" cy="12" r="10" />
+                <line x1="12" y1="16" x2="12" y2="12" />
+                <line x1="12" y1="8" x2="12" y2="8" />
+              </svg>
+            </span>
+          </label>
+          <select type="text" id="country" name="country">
+            <option value="US" selected>US</option>
+          </select>
+          <span class="tooltip-text">The two-letter
+            <a href="https://en.wikipedia.org/wiki/List_of_ISO_3166_country_codes" target="_blank"
+              class="tooltip-link">ISO 3166 country code</a>
+            of the parcel.</span>
+        </div>
+        <br />
+        <div class="sub-container">
+          <label for="countrySubdivision" class="country-label">CountrySubdivision
+            <span class="tooltip-icon info-icon">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="12" cy="12" r="10" />
+                <line x1="12" y1="16" x2="12" y2="12" />
+                <line x1="12" y1="8" x2="12" y2="8" />
+              </svg>
+            </span>
+          </label>
+          <input type="text" id="countrySubdivision" name="countrySubdivision" placeholder="48201" required />
+          <span class="tooltip-text">A country-specific formula identifying the country subdivision of
+            the authority that issued the parcel number. In the U.S.,
+            <a href="https://www.census.gov/programs-surveys/geography/guidance/geo-identifiers.html" target="_blank"
+              class="tooltip-link">GEOIDs</a>
+            are used. In the EU,
+            <a href="https://ec.europa.eu/eurostat/web/nuts/overview" target="_blank" class="tooltip-link">NUTS</a>
+            is used. Other countries may have their own country
+            subdivisions.</span>
+        </div>
+        <br />
+        <div>
+          <label for="parcelNumber">ParcelNumber</label>
+          <input type="text" id="parcelNumber" name="parcelNumber" placeholder="R000022230" required />
+        </div>
+        <br />
+        <div>
+          <label for="parcelSubcomponent">ParcelSubcomponent</label>
+          <input type="text" id="parcelSubcomponent" name="parcelSubcomponent" placeholder="78 - 9.aB" />
+        </div>
+        <br />
+        <div>
+          <button type="submit">Build UPI</button>
+        </div>
+        <br />
+        <div class="placeholder-upi-container" id="placeholder-upi-container"></div>
+        <div class="upi-container" id="upi-text-container">
+          <span class="upi-text-value" id="upiValue"></span>
+          <svg id="copyIcon" aria-hidden="true" focusable="false" role="img" class="octicon octicon-copy"
+            viewBox="0 0 16 16" width="16" height="16" fill="#6b7280" style="
                 display: inline-block;
                 user-select: none;
                 vertical-align: text-bottom;
                 overflow: visible;
                 cursor: pointer;
                 margin-right: 12px;
-              "
-            >
-              <path
-                d="M0 6.75C0 5.784.784 5 1.75 5h1.5a.75.75 0 0 1 0 1.5h-1.5a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25v-1.5a.75.75 0 0 1 1.5 0v1.5A1.75 1.75 0 0 1 9.25 16h-7.5A1.75 1.75 0 0 1 0 14.25Z"
-              ></path>
-              <path
-                d="M5 1.75C5 .784 5.784 0 6.75 0h7.5C15.216 0 16 .784 16 1.75v7.5A1.75 1.75 0 0 1 14.25 11h-7.5A1.75 1.75 0 0 1 5 9.25Zm1.75-.25a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25v-7.5a.25.25 0 0 0-.25-.25Z"
-              ></path>
-            </svg>
-            <svg
-              id="tickIcon"
-              aria-hidden="true"
-              focusable="false"
-              role="img"
-              class="octicon octicon-check"
-              viewBox="0 0 16 16"
-              width="16"
-              height="16"
-              fill="green"
-              style="
+              ">
+            <path
+              d="M0 6.75C0 5.784.784 5 1.75 5h1.5a.75.75 0 0 1 0 1.5h-1.5a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25v-1.5a.75.75 0 0 1 1.5 0v1.5A1.75 1.75 0 0 1 9.25 16h-7.5A1.75 1.75 0 0 1 0 14.25Z">
+            </path>
+            <path
+              d="M5 1.75C5 .784 5.784 0 6.75 0h7.5C15.216 0 16 .784 16 1.75v7.5A1.75 1.75 0 0 1 14.25 11h-7.5A1.75 1.75 0 0 1 5 9.25Zm1.75-.25a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25v-7.5a.25.25 0 0 0-.25-.25Z">
+            </path>
+          </svg>
+          <svg id="tickIcon" aria-hidden="true" focusable="false" role="img" class="octicon octicon-check"
+            viewBox="0 0 16 16" width="16" height="16" fill="green" style="
                 display: none;
                 user-select: none;
                 vertical-align: text-bottom;
                 overflow: visible;
                 margin-right: 12px;
-              "
-            >
-              <path
-                d="M13.78 4.22a.75.75 0 0 1 0 1.06l-7.25 7.25a.75.75 0 0 1-1.06 0L2.22 9.28a.751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018L6 10.94l6.72-6.72a.75.75 0 0 1 1.06 0Z"
-              ></path>
-            </svg>
-            <div id="copiedTooltip" class="copied-tooltip">Copied!</div>
-          </div>
-          <span
-            ><a href="https://upi.reso.org/" class="more-info"
-              >MORE INFO</a
-            ></span
-          >
-        </form>
-      </div>
+              ">
+            <path
+              d="M13.78 4.22a.75.75 0 0 1 0 1.06l-7.25 7.25a.75.75 0 0 1-1.06 0L2.22 9.28a.751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018L6 10.94l6.72-6.72a.75.75 0 0 1 1.06 0Z">
+            </path>
+          </svg>
+          <div id="copiedTooltip" class="copied-tooltip">Copied!</div>
+        </div>
+        <span><a href="https://upi.reso.org/" class="more-info">MORE INFO</a></span>
+      </form>
     </div>
-  </body>
+  </div>
+</body>
+
 </html>
