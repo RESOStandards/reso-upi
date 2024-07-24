@@ -121,6 +121,21 @@ The data used for the hash is everything from the `version` component to the end
 * [**Mark Lesswing**](mailto:mark@lesswing.com)
 * **RESO UPI Workgroup**
 
+# References
+* [**URN Specification (RFC 8141)**](https://datatracker.ietf.org/doc/html/rfc8141)
+* [**RESO URN Assignment**](https://www.iana.org/assignments/urn-formal/reso)
+* [**URI Specification (RFC 3986)**](https://datatracker.ietf.org/doc/html/rfc3986)
+* [**ISO 3166 Country Codes (Wikipedia)**](https://en.wikipedia.org/wiki/List_of_ISO_3166_country_codes)
+* [**GEOIDs**](https://www.census.gov/programs-surveys/geography/guidance/geo-identifiers.html)
+* [**ANSI and FIPS references**](https://www.census.gov/library/reference/code-lists/ansi.html)
+  * [**States**](https://www.census.gov/library/reference/code-lists/ansi.html#states)
+  * [**Counties**](https://www.census.gov/library/reference/code-lists/ansi.html#cou)
+  * [**County subdivisions**](https://www.census.gov/library/reference/code-lists/ansi.html#cousub)
+
+# License
+
+By downloading these resources, you confirm that you agree to the [**RESO EULA**](https://reso.org/eula).
+
 # Contributing
 If you would like to suggest changes, [**please open a ticket**](https://github.com/RESOStandards/reso-upi/issues).
 
